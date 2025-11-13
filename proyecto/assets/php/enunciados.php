@@ -60,4 +60,11 @@ $enunciados = [
         ],
         "Usa prepared statements con parámetros"
     ),
+    new Enunciado(
+        4,
+        "JOIN - Productos con categoría",
+        "Escribe una consulta que obtenga el nombre del producto, su precio y el nombre de su categoría. Usa INNER JOIN.Luego, ordena los resultados por categoría y dentro de cada categoría por precio.",
+        [],
+        "SELECT p.nombre, p.precio, c.nombre FROM productos p INNER JOIN categorias c..."
+    )
 ];

@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="card">
-        <h1>Ejercicios Tema 3</h1>
+        <h1>PHP - Ejercicios Tema 3 - David Duque Díaz</h1>
         <?php
         //INCLUDES
         /** @var Enunciado[] $enunciados */ //necesario
@@ -32,7 +32,7 @@
         $username = 'root';
         $password = 'root';
         $pdo = conexion($host, $dbname, $username, $password);
-
+        //--------------------------------------------------------------------------------------------------------------
         //ejercicio 01
         muestraEnunciado($enunciados[0]);
 
@@ -42,6 +42,7 @@
         //crea las tablas
         creaTablas($pdo);
 
+        //--------------------------------------------------------------------------------------------------------------
         //ejercicio 02
         muestraEnunciado($enunciados[1]);
         //muestra el código SQL que se va a usar
@@ -52,7 +53,7 @@
         //muestra las categorías que existen
         muestraCategorias($pdo);
 
-
+        //--------------------------------------------------------------------------------------------------------------
         //ejercicio 03
         muestraEnunciado($enunciados[2]);
 
@@ -94,8 +95,18 @@
         imprimirTablaProductos("c) Productos con stock menor a ".$cant, $productos);
 
         //03d)Contar cuántos productos hay en total
+        $sql_d = "SELECT COUNT(*) FROM productos";
 
+        $stmt_d = $pdo->prepare($sql_d);
+        $stmt_d->execute();
 
+        $total_productos = $stmt_d->fetchColumn();
+        echo "<h2>🛒 d) Contar cuántos productos hay en total</h2>";
+        echo "<p style='text-align: center'>En la base de datos hay un total de ".$total_productos." productos.</p>";
+
+        //--------------------------------------------------------------------------------------------------------------
+        //ejercicio 04
+        muestraEnunciado($enunciados[3]);
         ?>
 
     </div>
