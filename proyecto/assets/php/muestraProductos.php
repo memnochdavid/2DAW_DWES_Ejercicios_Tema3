@@ -1,8 +1,8 @@
 <?php
-function muestraProductos($pdo)
+function muestraProductos($pdo, $order_param='id', $order_dir='')
 {
     echo "<h2>🛒 Productos en la base de datos</h2>";
-    $stmt = $pdo->query("SELECT productos.*, categorias.nombre as cat_name FROM productos, categorias WHERE productos.categoria_id =categorias.id ORDER BY id");
+    $stmt = $pdo->query("SELECT productos.*, categorias.nombre as cat_name FROM productos, categorias WHERE productos.categoria_id =categorias.id ORDER BY ".$order_param." ".$order_dir);
     $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     if (count($productos) > 0) {

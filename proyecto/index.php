@@ -31,7 +31,7 @@
         ?>
         <h2>🧾 Tablas</h2>
         <?php
-        //ejericio 01
+        //ejercicio 01
         // Crear tabla de ejemplo si no existe
         creaTablas($pdo);
 
@@ -44,6 +44,22 @@
 
         //muestra los prods si existen
         muestraProductos($pdo);
+        ?>
+        <h2>🧾 Ejercicio 02</h2>
+        <?php
+        /*
+         * Ejercicio 3: Consultas SELECT básicas
+Escribe consultas PHP para:
+a) Obtener todos los productos ordenados por precio (menor a mayor)
+b) Obtener productos de una categoría específica
+c) Obtener productos con stock menor a 20
+d) Contar cuántos productos hay en total
+💡
+Usa prepared statements con parámetros
+         * */
+        muestraProductos($pdo, "precio", "ASC");
+
+
         ?>
 
     </div>
