@@ -8,7 +8,7 @@ function muestraBoton($numEj):void
             background-color: #333;
             color: white;
             padding: 15px 32px;        
-        '>Ej$numEj</a>
+        '>Ej0$numEj</a>
         
     ";
 
