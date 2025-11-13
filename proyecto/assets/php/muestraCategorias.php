@@ -6,7 +6,7 @@ function muestraCategorias($pdo)
     $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     if (count($categorias) > 0) {
-        echo "<table style='width: 100%; border-collapse: collapse;'>";
+        echo "<table style='width: 80%; border-collapse: collapse; margin: auto'>";
         echo "<tr style='background: #f4f4f4;'>";
         echo "<th style='padding: 10px; border: 1px solid #ddd;'>ID</th>";
         echo "<th style='padding: 10px; border: 1px solid #ddd;'>Nombre</th>";

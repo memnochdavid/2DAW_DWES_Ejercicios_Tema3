@@ -10,9 +10,13 @@
 </head>
 <body>
     <div class="card">
-        <h1>🚀 Entorno PHP + MariaDB</h1>
+        <h1>Ejercicios Tema 3</h1>
         <?php
         //INCLUDES
+        /** @var Enunciado[] $enunciados */ //necesario
+        include './assets/php/enunciados.php';
+        include './assets/php/muestraEnunciado.php';
+        include './assets/php/muestraSQL.php';
         include './assets/php/conecta.php';
         include './assets/php/creaTablas.php';
         include './assets/php/rellenaTablas.php';
@@ -28,36 +32,68 @@
         $username = 'root';
         $password = 'root';
         $pdo = conexion($host, $dbname, $username, $password);
-        ?>
-        <h2>🧾 Tablas</h2>
-        <?php
+
         //ejercicio 01
-        // Crear tabla de ejemplo si no existe
+        muestraEnunciado($enunciados[0]);
+
+        //muestra el código SQL que se va a usar
+        $archivo = "ej01.sql";
+        muestraSQL("🧾 Mostrando archivo ".$archivo, "./sql/".$archivo);
+        //crea las tablas
         creaTablas($pdo);
 
         //ejercicio 02
-        //rellena tablas si están vacías
+        muestraEnunciado($enunciados[1]);
+        //muestra el código SQL que se va a usar
+        $archivo = "ej02.sql";
+        muestraSQL("🧾 Mostrando archivo ".$archivo, "./sql/".$archivo);
+        //rellena las tablas con datos
         rellenaTablas($pdo);
-
         //muestra las categorías que existen
         muestraCategorias($pdo);
 
-        //muestra los prods si existen
-        muestraProductos($pdo);
-        ?>
-        <h2>🧾 Ejercicio 02</h2>
-        <?php
-        /*
-         * Ejercicio 3: Consultas SELECT básicas
-Escribe consultas PHP para:
-a) Obtener todos los productos ordenados por precio (menor a mayor)
-b) Obtener productos de una categoría específica
-c) Obtener productos con stock menor a 20
-d) Contar cuántos productos hay en total
-💡
-Usa prepared statements con parámetros
-         * */
-        muestraProductos($pdo, "precio", "ASC");
+
+        //ejercicio 03
+        muestraEnunciado($enunciados[2]);
+
+        //03a) Obtener todos los productos ordenados por precio (menor a mayor)
+        $sql_a = "SELECT p.*, c.nombre as cat_name 
+          FROM productos p
+          JOIN categorias c ON p.categoria_id = c.id
+          ORDER BY p.precio ASC";
+
+        $stmt_a = $pdo->prepare($sql_a);
+        $stmt_a->execute();
+        $productos = $stmt_a->fetchAll(PDO::FETCH_ASSOC);
+
+        //muestra el resultado
+        imprimirTablaProductos("a) Productos ordenados por precio (menor a mayor)", $productos);
+
+        //03b) Obtener productos de una categoría específica
+        $cat = "'Tropicales'";
+        $sql_a = "SELECT productos.*, categorias.nombre as cat_name FROM productos, categorias
+        WHERE categorias.id = productos.categoria_id AND categorias.nombre =".$cat;
+
+        $stmt_a = $pdo->prepare($sql_a);
+        $stmt_a->execute();
+        $productos = $stmt_a->fetchAll(PDO::FETCH_ASSOC);
+
+        //muestra el resultado
+        imprimirTablaProductos("b) Productos que pertenecen a la Categoría ".$cat, $productos);
+
+        //03c)Obtener productos con stock menor a 20
+        $cant = 20;
+        $sql_a = "SELECT productos.*, categorias.nombre as cat_name FROM productos, categorias
+        WHERE categorias.id = productos.categoria_id AND productos.stock <".$cant;
+
+        $stmt_a = $pdo->prepare($sql_a);
+        $stmt_a->execute();
+        $productos = $stmt_a->fetchAll(PDO::FETCH_ASSOC);
+
+        //muestra el resultado
+        imprimirTablaProductos("c) Productos con stock menor a ".$cant, $productos);
+
+        //03d)Contar cuántos productos hay en total
 
 
         ?>
