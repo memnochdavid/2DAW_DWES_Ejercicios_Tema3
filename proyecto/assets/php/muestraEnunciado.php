@@ -1,12 +1,13 @@
 <?php
 function muestraEnunciado(Enunciado $enunciado): void
 {
-    echo "<br>";
+    $id = "ej0".$enunciado->num;
+    $class = "enunciado";
     // Usamos estilos en línea para simplicidad, idealmente serían clases CSS
-    echo "<div style='border: 1px solid #ddd; border-radius: 8px; padding: 20px; margin-bottom: 25px; background: #fafafa; font-family: sans-serif;'>";
+    echo "<div id='".$id."' style='border: 1px solid #ddd; border-radius: 8px; padding: 20px; margin-bottom: 25px; margin-top: 75px; background: #fafafa; font-family: sans-serif;' class='".$class."'>";
 
     // 1. Título (Número y Título)
-    echo "<h2 style='color: #333; margin-top: 0;'>";
+    echo "<h2 style='margin-top: 0;'>";
     echo "Ejercicio " . htmlspecialchars($enunciado->num) . ": " . htmlspecialchars($enunciado->titulo);
     echo "</h2>";
 
