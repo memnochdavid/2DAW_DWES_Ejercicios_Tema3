@@ -8,7 +8,7 @@ services:
     # ✅ CAMBIO AQUÍ: Ya no usa la imagen genérica,
     # sino que construye la tuya propia desde la carpeta indicada.
     build: ./docker_php_config
-    container_name: php_web
+    container_name: php_web2
     ports:
       - "8089:80"
     volumes:
@@ -21,7 +21,7 @@ services:
   # Base de datos MariaDB (Sin cambios)
   db:
     image: mariadb:10.11
-    container_name: mariadb
+    container_name: mariadb2
     ports:
       - "3306:3306"
     environment:
@@ -37,7 +37,7 @@ services:
   # phpMyAdmin (Sin cambios)
   phpmyadmin:
     image: phpmyadmin:latest
-    container_name: phpmyadmin
+    container_name: phpmyadmin2
     ports:
       - "8081:80"
     environment:
