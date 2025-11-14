@@ -6,17 +6,17 @@ function transaction(PDO $pdo, array $queries): bool
     try {
         $pdo->beginTransaction();
 
-        // 2. Recorrer y ejecutar cada consulta
+        // recorre y ejecuta cada consulta del array
         foreach ($queries as $query) {
 
-            // Aseguramos que los 'params' existan, aunque estén vacíos
+            //por si acaso no existen
             $sql = $query['sql'];
             $params = $query['params'] ?? [];
 
             $stmt = $pdo->prepare($sql);
             $stmt->execute($params);
 
-            // Acumulamos las filas afectadas
+            //filas afectadas - para el display
             $totalRowsAffected += $stmt->rowCount();
         }
 
@@ -37,7 +37,7 @@ function transaction(PDO $pdo, array $queries): bool
         return false;
     }
 }
-
+/*
 function transactionalUpdate(PDO $pdo, string $nombreTabla, string $columna, $valor, int $id): bool
 {
     // Construimos el SQL de forma segura (sin parámetros para tabla/columna)
@@ -82,5 +82,5 @@ function transactionalUpdate(PDO $pdo, string $nombreTabla, string $columna, $va
         return false; // Fracaso
     }
 }
-
+*/
 
