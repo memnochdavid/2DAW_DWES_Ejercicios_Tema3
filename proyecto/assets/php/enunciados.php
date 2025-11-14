@@ -28,7 +28,6 @@ class Enunciado
 }
 
 $enunciados = [
-    //ej01
     new Enunciado(
         1, // $num
         "Crear la BD de Tienda de Frutas", // $titulo
@@ -66,5 +65,48 @@ $enunciados = [
         "Escribe una consulta que obtenga el nombre del producto, su precio y el nombre de su categoría. Usa INNER JOIN.Luego, ordena los resultados por categoría y dentro de cada categoría por precio.",
         [],
         "SELECT p.nombre, p.precio, c.nombre FROM productos p INNER JOIN categorias c..."
-    )
+    ),
+    new Enunciado(
+        5,
+        "UPDATE - Cambiar precios",
+        "Crea un script PHP que:",
+        [
+            "Aumente el precio de todos los productos de una categoría en un 10%",
+            "Reduzca el stock de un producto específico cuando se realiza una compra",
+            "Valide que el stock no sea negativo antes de actualizar"
+        ],
+        "Usa transacciones para garantizar que ambas operaciones se completen"
+    ),
+    new Enunciado(
+        6,
+        "DELETE - Eliminar productos",
+        "Crea un script que elimine productos sin stock (stock = 0). Pero antes, implementa un soft delete añadiendo una columna 'eliminado' en la tabla productos. Luego, modifica tus consultas SELECT para no mostrar productos eliminados.",
+        [],
+        "Usa UPDATE en lugar de DELETE para marcar como eliminado"
+    ),
+    new Enunciado(
+        7,
+        "Simulación de compra",
+        "Crea un script que simule una compra:",
+        [
+            "Crear un nuevo pedido para un usuario",
+            "Reducir el stock del producto",
+            "Calcular el total del pedido",
+            "Usar transacciones para garantizar consistencia",
+            "Manejar errores (stock insuficiente, usuario no existe, etc.)",
+        ],
+        "Usa try-catch con PDOException y beginTransaction()"
+    ),
+    new Enunciado(
+        8,
+        "Reportes y análisis",
+        "Crea consultas que generen reportes:",
+        [
+            "Productos más vendidos (requiere tabla de detalles de pedidos)",
+            "Ingresos totales por categoría",
+            "Productos con bajo stock (< 10 unidades)",
+            "Usuarios con más compras",
+        ],
+        "Usa GROUP BY, SUM(), COUNT() y ORDER BY para análisis"
+    ),
 ];

@@ -4,7 +4,7 @@ function muestraEnunciado(Enunciado $enunciado): void
     $id = "ej0".$enunciado->num;
     $class = "enunciado";
     // Usamos estilos en línea para simplicidad, idealmente serían clases CSS
-    echo "<div id='".$id."' style='border: 1px solid #ddd; border-radius: 8px; padding: 20px; margin-bottom: 25px; margin-top: 75px; background: #fafafa; font-family: sans-serif;' class='".$class."'>";
+    echo "<div id='".$id."' style='border: 1px solid #ddd; border-radius: 8px; padding: 20px; background: #fafafa; font-family: sans-serif;' class='".$class."'>";
 
     // 1. Título (Número y Título)
     echo "<h2 style='margin-top: 0;'>";

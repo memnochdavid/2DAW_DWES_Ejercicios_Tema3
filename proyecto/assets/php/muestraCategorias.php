@@ -15,9 +15,9 @@ function muestraCategorias($pdo)
 
         foreach ($categorias as $cat) {
             echo "<tr>";
-            echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$cat['id']}</td>";
-            echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$cat['nombre']}</td>";
-            echo "<td style='padding: 10px; border: 1px solid #ddd;'>{$cat['descripcion']}</td>";
+            echo "<td style='padding: 10px; border: 1px solid #ddd; background: #f6f6f6;'>{$cat['id']}</td>";
+            echo "<td style='padding: 10px; border: 1px solid #ddd; background: #f6f6f6;'>{$cat['nombre']}</td>";
+            echo "<td style='padding: 10px; border: 1px solid #ddd; background: #f6f6f6;'>{$cat['descripcion']}</td>";
             echo "</tr>";
         }
 
