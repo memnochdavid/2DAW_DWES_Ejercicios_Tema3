@@ -20,14 +20,12 @@ function transaction(PDO $pdo, array $queries): bool
             $totalRowsAffected += $stmt->rowCount();
         }
 
-        // 3. Si todo fue bien, confirmar
         $pdo->commit();
 
         echo "<p class='success'>✅ Transacción completada con éxito ($totalRowsAffected fila(s) afectada(s) en total).</p>";
         return true;
 
     } catch (PDOException $e) {
-        // 4. Si algo falló, deshacer todo
         echo "<p class='error'>❌ Error de transacción. Comenzando Rollback: " . $e->getMessage() . "</p>";
         try {
             $pdo->rollBack();

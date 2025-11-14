@@ -93,7 +93,7 @@
     $productos = $stmt_a->fetchAll(PDO::FETCH_ASSOC);
 
     //imprime el sql usado
-    echo "<h2>Consulta SQL usada:</h2>";
+    echo "<h4>Consulta SQL usada:</h4>";
     imprimirBloqueSQL($sql_a);
 
     //muestra el resultado
@@ -109,7 +109,7 @@
     $productos = $stmt_a->fetchAll(PDO::FETCH_ASSOC);
 
     //imprime el sql usado
-    echo "<h2>Consulta SQL usada:</h2>";
+    echo "<h4>Consulta SQL usada:</h4>";
     imprimirBloqueSQL($sql_a);
 
     //muestra el resultado
@@ -125,7 +125,7 @@
     $productos = $stmt_a->fetchAll(PDO::FETCH_ASSOC);
 
     //imprime el sql usado
-    echo "<h2>Consulta SQL usada:</h2>";
+    echo "<h4>Consulta SQL usada:</h4>";
     imprimirBloqueSQL($sql_a);
 
     //muestra el resultado
@@ -140,7 +140,7 @@
     $total_productos = $stmt_d->fetchColumn();
 
     //imprime el sql usado
-    echo "<h2>Consulta SQL usada:</h2>";
+    echo "<h4>Consulta SQL usada:</h4>";
     imprimirBloqueSQL($sql_a);
 
     echo "<h2>🛒 d) Contar cuántos productos hay en total</h2>";
@@ -162,7 +162,7 @@
     $productos = $stmt_a->fetchAll(PDO::FETCH_ASSOC);
 
     //imprime el sql usado
-    echo "<h2>Consulta SQL usada:</h2>";
+    echo "<h4>Consulta SQL usada:</h4>";
     imprimirBloqueSQL($sql_a);
 
     //muestra el resultado
@@ -187,7 +187,7 @@
         )
     ";
 
-    echo "<h2>Consulta SQL (Plantilla Segura) usada:</h2>";
+    echo "<h4>Consulta SQL (Plantilla Segura) usada:</h4>";
     imprimirBloqueSQL($sql_a);
 
     $parametros = [
@@ -213,7 +213,7 @@
           WHERE nombre = :prodNombre 
           AND stock >= :cantidad";
 
-    echo "<h2>Consulta SQL (Plantila Segura con Validación) usada:</h2>";
+    echo "<h4>Consulta SQL (Plantila Segura con Validación) usada:</h4>";
     imprimirBloqueSQL($sql_b);
 
     $parametros = [
@@ -234,7 +234,63 @@
     echo "<div class='card-sub'>";
     muestraEnunciado($enunciados[5]);
 
+    //implementación del soft delete
+    echo"<h2>Añade columna 'Eliminado' a tabla productos</h2>";
+    $sql_alter = "ALTER TABLE productos ADD COLUMN eliminado BOOLEAN NOT NULL DEFAULT 0";
 
+    echo "<h4>Consulta SQL usada:</h4>";
+    imprimirBloqueSQL($sql_alter);
+
+    try {
+        // exec() es útil para sentencias que no devuelven resultados, como ALTER
+        $pdo->exec($sql_alter);
+        echo "<p class='success'>✅ Columna 'eliminado' añadida a 'productos'.</p>";
+    } catch (PDOException $e) {
+        // Manejamos el error si la columna ya existe (Código 42S21)
+        if ($e->getCode() == '42S21') {
+            echo "<p class='info'>ℹ️ La columna 'eliminado' ya existía.</p>";
+        } else {
+            echo "<p class='error'>❌ Error al alterar la tabla: " . $e->getMessage() . "</p>";
+        }
+    }
+
+    //hace soft delete de los prods con stock == 0
+    echo"<h2>Actualiza la columna 'eliminado' a true si el stock es 0</h2>";
+
+    $sql_soft_delete = "UPDATE productos SET eliminado = 1 WHERE stock = :stock";
+
+    echo "<h4>Consulta SQL usada:</h4>";
+    imprimirBloqueSQL($sql_soft_delete);
+
+    $parametros = [
+            ':stock' => 0
+    ];
+
+    $consulta = [
+            'sql'    => $sql_soft_delete,
+            'params' => $parametros
+    ];
+
+    // Ejecutamos la actualización dentro de una transacción
+    transaction($pdo, [ $consulta ]);
+
+    //mostramos los resultados
+    $sql_a = "SELECT p.*, c.nombre AS cat_name 
+            FROM productos p
+            INNER JOIN categorias c ON p.categoria_id = c.id
+            WHERE eliminado = 0";
+
+    $stmt_a = $pdo->prepare($sql_a);
+    $stmt_a->execute();
+    $productos = $stmt_a->fetchAll(PDO::FETCH_ASSOC);
+
+    //imprime el sql usado
+    echo "<h2>Muestra el resultado</h2>";
+    echo "<h4>Consulta SQL usada:</h4>";
+    imprimirBloqueSQL($sql_a);
+
+    //muestra el resultado
+    imprimirTablaProductos("Productos no eliminados", $productos);
 
 
 
