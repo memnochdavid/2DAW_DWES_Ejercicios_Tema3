@@ -26,3 +26,9 @@ INSERT INTO productos (nombre, categoria_id, precio, stock) VALUES
 ('Piña', 3, 3.00, 45),
 ('Papaya', 3, 2.80, 35),
 ('Kiwi', 3, 2.20, 70);
+
+INSERT INTO usuarios (nombre, email, contraseña) VALUES
+("Alberto", "alberto@correo.com", "1234"),
+("Mónica", "monica@correo.com", "1234"),
+("Sara", "sara@correo.com", "1234"),
+("Juan", "juan@correo.com", "1234");
