@@ -467,7 +467,23 @@
     imprimirTablaGenerica("Producto más vendido", $producto_mas_vendido);
 
 
-    //b) Ingresos totales por categoría
+    // b) Ingresos totales por categoría
+    $sql_ingresos_cat = "
+    SELECT 
+        c.nombre AS Categoria,
+        SUM(dp.cantidad * dp.precio_unitario) AS Ingresos_Totales
+    FROM categorias c
+    JOIN productos p ON c.id = p.categoria_id
+    JOIN detalles_pedido dp ON p.id = dp.producto_id
+    GROUP BY c.id, c.nombre
+    ORDER BY Ingresos_Totales DESC
+    ";
+
+    $stmt = $pdo->prepare($sql_ingresos_cat);
+    $stmt->execute();
+    $ingresos_cat = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo "<h2>Muestra el resultado</h2>";
 
 
 
