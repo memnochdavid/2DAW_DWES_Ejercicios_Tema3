@@ -16,10 +16,8 @@
     include './assets/php/database/conecta.php';
     include './assets/php/database/init/creaTablas.php';
     include './assets/php/database/init/rellenaTablas.php';
-    include './assets/php/show/muestraCategorias.php';
-    include './assets/php/show/muestraProductos.php';
+    include './assets/php/show/muestraTabla.php';
     include './assets/php/database/transaction.php';
-    include './assets/php/show/muestraPedidos.php';
     ?>
     <title>2DAW Desarrollo web en entorno servidor (PHP + MariaDB)</title>
 </head>
@@ -83,7 +81,10 @@
     //rellena las tablas con datos
     rellenaTablas($pdo);
     //muestra las categorías que existen
-    muestraCategorias($pdo);
+    echo "<h2>🏷️ Categorías en la base de datos</h2>";
+    $stmt = $pdo->query("SELECT * FROM categorias ORDER BY id");
+    $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    imprimirTablaGenerica("Todas las categorías",$categorias);
     echo "</div>";
 
     //--------------------------------------------------------------------------------------------------------------
@@ -112,7 +113,7 @@
     imprimirBloqueSQL($sql_a);
 
     //muestra el resultado
-    imprimirTablaProductos("a) Productos ordenados por precio (menor a mayor)", $productos);
+    imprimirTablaGenerica("a) Productos ordenados por precio (menor a mayor)", $productos);
 
     //03b) Obtener productos de una categoría específica
     $cat = "'Tropicales'";
@@ -128,7 +129,7 @@
     imprimirBloqueSQL($sql_a);
 
     //muestra el resultado
-    imprimirTablaProductos("b) Productos que pertenecen a la Categoría " . $cat, $productos);
+    imprimirTablaGenerica("b) Productos que pertenecen a la Categoría " . $cat, $productos);
 
     //03c)Obtener productos con stock menor a 20
     $cant = 20;
@@ -144,7 +145,7 @@
     imprimirBloqueSQL($sql_a);
 
     //muestra el resultado
-    imprimirTablaProductos("c) Productos con stock menor a " . $cant, $productos);
+    imprimirTablaGenerica("c) Productos con stock menor a " . $cant, $productos);
 
     //03d)Contar cuántos productos hay en total
     $sql_d = "SELECT COUNT(*) FROM productos";
@@ -186,7 +187,7 @@
     imprimirBloqueSQL($sql_a);
 
     //muestra el resultado
-    imprimirTablaProductos("Productos con categoría usando INNER JOIN", $productos);
+    imprimirTablaGenerica("Productos con categoría usando INNER JOIN", $productos);
     echo "</div>";
 
     //--------------------------------------------------------------------------------------------------------------
@@ -322,7 +323,7 @@
     imprimirBloqueSQL($sql_a);
 
     //muestra el resultado
-    imprimirTablaProductos("Productos no eliminados", $productos);
+    imprimirTablaGenerica("Productos no eliminados", $productos);
     echo "</div>";
     //--------------------------------------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------------------------------------
@@ -387,14 +388,29 @@
                 ],
         ];
 
+        //se crean los detalles del pedido y se insertan en su tabla
+        $detalle_sql = "INSERT INTO detalles_pedido (pedido_id, producto_id, cantidad, precio_unitario) 
+                    VALUES (LAST_INSERT_ID(), :prod_id, :cant, :precio)";
+
+        $query_insert_detalle = [
+                'sql' => $detalle_sql,
+                'params' => [
+                        ':prod_id' => $producto_id,
+                        ':cant'    => $cantidad_comprada,
+                        ':precio'  => $producto['precio']
+                ]
+        ];
+
         echo "<h2>Muestra el resultado</h2>";
         echo "<h4>Update del Stock:</h4>";
         imprimirBloqueSQL($update_stock);
         echo "<h4>Insert del pedido:</h4>";
         imprimirBloqueSQL($pedido);
+        echo "<h4>Insert de los detalles del pedido:</h4>";
+        imprimirBloqueSQL($detalle_sql);
 
         echo "<h4>Iniciando transacción...</h4>";
-        transaction($pdo, [ $query_update_stock, $query_insert_pedido ]);
+        transaction($pdo, [ $query_update_stock, $query_insert_pedido, $query_insert_detalle ]);
 
     } catch (Exception $e) {
         echo "<p class='error'>❌ Error en la preparación de la compra: " . $e->getMessage() . "</p>";
@@ -406,7 +422,7 @@
     $stmt->execute();
     $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    imprimirTablaPedidos("Contenido de tabla Pedidos", $pedidos);
+    imprimirTablaGenerica("Contenido de tabla Pedidos", $pedidos);
 
     echo "</div>";
     //--------------------------------------------------------------------------------------------------------------
@@ -421,8 +437,37 @@
     echo "<div class='card-sub'>";
     muestraEnunciado($enunciados[7]);
 
+    //a)Productos más vendidos (requiere tabla de detalles de pedidos)
+    $sql_mas_vendido = "
+        SELECT 
+        p.id,
+        p.nombre,
+        p.precio,
+        c.nombre AS cat_name,
+        (SELECT SUM(dp.cantidad) 
+         FROM detalles_pedido dp 
+         WHERE dp.producto_id = p.id) AS stock -- Aquí renombramos 'total_vendido' a 'stock'
+    FROM productos p
+    JOIN categorias c ON p.categoria_id = c.id
+    HAVING stock > 0
+    ORDER BY stock DESC
+    ";
+
+    $stmt = $pdo->prepare($sql_mas_vendido);
+    $stmt->execute();
+    $producto_mas_vendido = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    //imprime el sql usado
+    echo "<h2>🛒 a) Productos más vendidos (requiere tabla de detalles de pedidos)</h2>";
+    echo "<h4>Consulta SQL usada:</h4>";
+    imprimirBloqueSQL($sql_mas_vendido);
+
+    echo "<h2>Muestra el resultado</h2>";
+    //muestra el resultado
+    imprimirTablaGenerica("Producto más vendido", $producto_mas_vendido);
 
 
+    //b) Ingresos totales por categoría
 
 
 

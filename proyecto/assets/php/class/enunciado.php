@@ -24,6 +24,7 @@ class Enunciado
         $this->enunciado = $enunciado;
         $this->apartados = $apartados;
         $this->pista = $pista;
+
     }
 }
 
