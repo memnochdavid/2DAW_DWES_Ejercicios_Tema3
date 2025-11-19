@@ -173,7 +173,7 @@
     echo "<div class='card-sub'>";
     muestraEnunciado($enunciados[3]);
 
-    $sql_a = "SELECT p.*, c.nombre AS cat_name 
+    $sql_a = "SELECT p.nombre,p.precio, p.stock, c.nombre AS categoria 
             FROM productos p
             INNER JOIN categorias c ON p.categoria_id = c.id
             ORDER BY c.nombre ASC, p.precio ASC";
