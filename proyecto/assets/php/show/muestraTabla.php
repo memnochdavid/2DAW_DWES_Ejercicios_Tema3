@@ -7,7 +7,7 @@ function imprimirTablaGenerica(string $titulo, array $datos): void
     if (count($datos) > 0) {
         //sacamos las columnas
         $columnasTodas = array_keys($datos[0]);
-        //columnas que se omiten
+        //columnas que se no omiten
         $columnasVisibles = array_diff($columnasTodas, ['eliminado']);
 
         echo "<table style='width: 80%; border-collapse: collapse; margin: auto'>";

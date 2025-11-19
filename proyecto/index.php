@@ -479,14 +479,60 @@
     ORDER BY Ingresos_Totales DESC
     ";
 
+    echo "<h4>Consulta SQL usada:</h4>";
+    imprimirBloqueSQL($sql_ingresos_cat);
     $stmt = $pdo->prepare($sql_ingresos_cat);
     $stmt->execute();
     $ingresos_cat = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo "<h2>Muestra el resultado</h2>";
+    imprimirTablaGenerica("Ingresos totales por categoría", $ingresos_cat);
+
+
+    //c)Productos con bajo stock (< 10 unidades)
+    echo "<h2>🛒 c) Productos con menos de 10 de stock</h2>";
+
+    $sql_bajo_stock = "
+    SELECT * FROM productos p
+    WHERE stock <= 10;
+    ";
 
 
 
+    $stmt = $pdo->prepare($sql_bajo_stock);
+    $stmt->execute();
+    $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo "<h4>Consulta SQL usada:</h4>";
+    imprimirBloqueSQL($sql_bajo_stock);
+    echo "<h2>Muestra el resultado</h2>";
+    imprimirTablaGenerica("Productos con menos de 10 unidades de stock", $productos);
+
+
+    //d)Usuario con más compras
+    echo "<h2>🛒 d) Uusuario con más compras</h2>";
+
+    $sql = "
+    SELECT 
+        u.nombre AS Usuario,
+        COUNT(p.id) AS 'Num Pedidos',
+        SUM(p.total) AS 'Total Gastado'
+    FROM usuarios u
+    JOIN pedidos p ON u.id = p.usuario_id
+    GROUP BY u.id, u.nombre
+    ORDER BY SUM(p.total) DESC
+    LIMIT 1 
+    ";
+
+    echo "<h4>Consulta SQL usada:</h4>";
+
+    imprimirBloqueSQL($sql);
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $producto_mas_comprado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo "<h2>Muestra el resultado</h2>";
+    imprimirTablaGenerica("Usuario con más compras", $producto_mas_comprado);
 
 
     echo "</div>";
