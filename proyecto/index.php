@@ -93,7 +93,7 @@
     muestraEnunciado($enunciados[2]);
 
     //03a) Obtener todos los productos ordenados por precio (menor a mayor)
-    $sql_a = "SELECT p.*, c.nombre as cat_name 
+    $sql_a = "SELECT p.nombre, p.precio, p.stock, c.nombre as categoria 
           FROM productos p
           JOIN categorias c ON p.categoria_id = c.id
           ORDER BY p.precio ASC";
@@ -111,7 +111,7 @@
 
     //03b) Obtener productos de una categoría específica
     $cat = "'Tropicales'";
-    $sql_a = "SELECT productos.*, categorias.nombre as cat_name FROM productos, categorias
+    $sql_a = "SELECT productos.nombre, productos.precio, productos.stock, categorias.nombre as categoria FROM productos, categorias
         WHERE categorias.id = productos.categoria_id AND categorias.nombre =" . $cat;
 
     $stmt_a = $pdo->prepare($sql_a);
