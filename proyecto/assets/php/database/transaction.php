@@ -45,7 +45,6 @@ function transaction(PDO $pdo, array $queries): bool
         } catch (PDOException $re) {
             echo "<p class='error'>❌ Error crítico de rollback: " . $re->getMessage() . "</p>";
         }
-
         return false;
     }
 }
