@@ -6,7 +6,7 @@ function transaction(PDO $pdo, array $queries): bool
     try {
         $pdo->beginTransaction();
 
-        // recorre y ejecuta cada consulta del array
+        //recorre y ejecuta cada consulta del array
         foreach ($queries as $query) {
 
             //por si acaso no existen

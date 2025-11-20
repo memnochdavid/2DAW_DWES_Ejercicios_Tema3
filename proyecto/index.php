@@ -22,15 +22,8 @@
     <title>2DAW Desarrollo web en entorno servidor (PHP + MariaDB)</title>
 </head>
 <body>
-<header style="
-            position: sticky;
-            top: 0;
-            z-index: 100; width: 100%;">
-    <nav style="
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        " class="card-nav">
+<header>
+    <nav class="card-nav">
         <?php
         foreach ($enunciados as $ejercicio) {
             muestraBoton($ejercicio->num);
@@ -39,6 +32,7 @@
     </nav>
 </header>
 <div class="card">
+
     <h1>PHP - Ejercicios Tema 3 - David Duque Díaz</h1>
 
     <h2>🔌 Conexión a MariaDB</h2>
@@ -227,7 +221,7 @@
             'params' => $parametros
     ];
 
-    transaction($pdo, [ $consulta_unica ]);
+    transaction($pdo, [$consulta_unica]);
 
     // b) y c) Reduzca el stock validando que no sea negativo
 
@@ -253,7 +247,7 @@
             'params' => $parametros
     ];
 
-    transaction($pdo, [ $consulta_unica ]);
+    transaction($pdo, [$consulta_unica]);
 
     echo "</div>";
     //--------------------------------------------------------------------------------------------------------------
@@ -305,7 +299,7 @@
     ];
 
     // Ejecutamos la actualización dentro de una transacción
-    transaction($pdo, [ $consulta ]);
+    transaction($pdo, [$consulta]);
 
     //mostramos los resultados
     $sql_a = "SELECT p.*, c.nombre AS cat_name 
@@ -410,7 +404,7 @@
         imprimirBloqueSQL($detalle_sql);
 
         echo "<h4>Iniciando transacción...</h4>";
-        transaction($pdo, [ $query_update_stock, $query_insert_pedido, $query_insert_detalle ]);
+        transaction($pdo, [$query_update_stock, $query_insert_pedido, $query_insert_detalle]);
 
     } catch (Exception $e) {
         echo "<p class='error'>❌ Error en la preparación de la compra: " . $e->getMessage() . "</p>";

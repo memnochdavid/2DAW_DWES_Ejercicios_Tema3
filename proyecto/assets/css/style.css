@@ -11,6 +11,29 @@ body {
     background-attachment: fixed;
     -webkit-background-size: cover;
 }
+header{
+    position: sticky;
+    top: 0;
+    z-index: 100; width: 100%;
+}
+nav{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+pre{
+    width: 80%;
+    max-height: 300px;
+    overflow-y: auto;
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: auto;
+    border-radius: 5px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    box-sizing: border-box;
+}
 .card {
     display: flex;
     flex-direction: column;
@@ -31,7 +54,6 @@ body {
 }
 .card-nav {
     display: flex;
-    justify-content: center;
     background: rgba(0, 0, 0, 0.42);
     padding: 20px 20px 40px 20px;
     border-radius: 5px;
@@ -45,8 +67,46 @@ h1 {
 h2{
     color: #333;
 }
+.enunciado{
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    background: #fafafa;
+    font-family: sans-serif;
+}
 .enunciado h2{
     color: #000000;
+}
+.enunciado ul{
+    background: #fff;
+    padding: 15px 15px 15px 40px;
+    border-radius: 5px;
+}
+.enunciado ul>li{
+    margin-bottom: 8px;
+}
+blockquote{
+    margin: 15px 0 0 0;
+    padding: 10px 15px;
+    background: #fdfdea;
+    border-left: 5px solid #f0ad4e;
+}
+table{
+    width: 80%;
+    border-collapse: collapse;
+    margin: auto;
+    tr{
+        background: #dcdcdc;
+    }
+    th{
+        padding: 10px;
+        border: 1px solid #ddd;
+    }
+    td{
+        padding: 10px;
+        border: 1px solid #ddd;
+        background: #f6f6f6;
+    }
 }
 .success {
     color: #28a745;
@@ -67,4 +127,10 @@ code {
     padding: 15px;
     border-radius: 5px;
     margin: 10px 0;
+}
+.boton{
+    text-decoration: none;
+    background-color: #333;
+    color: white;
+    padding: 15px 32px;
 }

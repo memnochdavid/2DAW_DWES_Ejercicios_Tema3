@@ -10,13 +10,13 @@ function imprimirTablaGenerica(string $titulo, array $datos): void
         //columnas que se no omiten
         $columnasVisibles = array_diff($columnasTodas, ['eliminado']);
 
-        echo "<table style='width: 80%; border-collapse: collapse; margin: auto'>";
+        echo "<table>";
 
         //cabecera
-        echo "<tr style='background: #dcdcdc;'>";
+        echo "<tr>";
         foreach ($columnasVisibles as $columna) {
             $nombreCabecera = ucwords(str_replace('_', ' ', $columna));
-            echo "<th style='padding: 10px; border: 1px solid #ddd;'>$nombreCabecera</th>";
+            echo "<th>$nombreCabecera</th>";
         }
         echo "</tr>";
 
@@ -31,7 +31,7 @@ function imprimirTablaGenerica(string $titulo, array $datos): void
             echo "<tr>";
             foreach ($columnasVisibles as $nombreColumna) {
                 $valor = $fila[$nombreColumna] ?? '';
-                echo "<td style='padding: 10px; border: 1px solid #ddd; background: #f6f6f6;'>$valor</td>";
+                echo "<td>$valor</td>";
             }
             echo "</tr>";
             $filasImpresas++;
@@ -41,10 +41,10 @@ function imprimirTablaGenerica(string $titulo, array $datos): void
 
         //si sólo hay eliminados, lo indica
         if ($filasImpresas == 0) {
-            echo "<p style='text-align: center; color: #666;'>ℹ️ Todos los registros están marcados como eliminados.</p>";
+            echo "<p class='info'>ℹ️ Todos los registros están marcados como eliminados.</p>";
         }
 
     } else {
-        echo "<p style='text-align: center; color: #666;'>⚠️ No se encontraron datos para: <strong>$titulo</strong>.</p>";
+        echo "<p class='info'>⚠️ No se encontraron datos para: <strong>$titulo</strong>.</p>";
     }
 }
