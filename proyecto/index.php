@@ -154,7 +154,7 @@
     imprimirBloqueSQL($sql_a);
 
     echo "<h2>🛒 d) Contar cuántos productos hay en total</h2>";
-    echo "<p style='text-align: center'>En la base de datos hay un total de " . $total_productos . " productos.</p>";
+    echo "<p class='info'>En la base de datos hay un total de " . $total_productos . " productos.</p>";
 
     echo "</div>";
     //--------------------------------------------------------------------------------------------------------------
@@ -298,11 +298,11 @@
             'params' => $parametros
     ];
 
-    // Ejecutamos la actualización dentro de una transacción
+    //transacción
     transaction($pdo, [$consulta]);
 
-    //mostramos los resultados
-    $sql_a = "SELECT p.*, c.nombre AS cat_name 
+    //resultados
+    $sql_a = "SELECT p.nombre, p.precio, p.stock, c.nombre AS categoria 
             FROM productos p
             INNER JOIN categorias c ON p.categoria_id = c.id
             WHERE eliminado = 0";
