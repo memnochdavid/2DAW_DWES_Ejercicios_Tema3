@@ -12,9 +12,6 @@ function conexion(
 
         echo "<p class='success'>✅ Conexión exitosa a la base de datos</p>";
 
-        // Obtener versión de MariaDB
-//        $version = $pdo->query('SELECT VERSION()')->fetchColumn();
-//        echo "<p class='info'>MariaDB versión: $version</p>";
         return $pdo;
 
     } catch(PDOException $e) {

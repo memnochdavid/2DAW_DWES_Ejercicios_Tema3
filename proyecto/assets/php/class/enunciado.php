@@ -1,22 +1,12 @@
 <?php
 class Enunciado
 {
-    // Propiedades
     public int $num;
     public string $titulo;
     public string $enunciado;
     public array $apartados;
     public string $pista;
 
-    /**
-     * Constructor de la clase Enunciados.
-     *
-     * @param int $num El número del ejercicio.
-     * @param string $titulo El título principal.
-     * @param string $enunciado La descripción o pregunta principal.
-     * @param array $apartados (Opcional) Una lista de puntos o sub-tareas.
-     * @param string|null $pista (Opcional) Una pista.
-     */
     public function __construct(int $num, string $titulo, string $enunciado, array $apartados = [], ?string $pista = null)
     {
         $this->num = $num;
@@ -111,3 +101,4 @@ $enunciados = [
         "Usa GROUP BY, SUM(), COUNT() y ORDER BY para análisis"
     ),
 ];
+

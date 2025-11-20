@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php
     //INCLUDES
-    /** @var Enunciado[] $enunciados */ //necesario
+    /** @var Enunciado[] $enunciados */ //necesario para que detecte la variable como creada
     include './assets/php/class/enunciado.php';
     include './assets/php/show/botones.php';
     include './assets/php/show/muestraEnunciado.php';
@@ -269,12 +269,10 @@
     imprimirBloqueSQL($sql_alter);
 
     try {
-        // exec() es útil para sentencias que no devuelven resultados, como ALTER
         $pdo->exec($sql_alter);
         echo "<p class='success'>✅ Columna 'eliminado' añadida a 'productos'.</p>";
     } catch (PDOException $e) {
-        // Manejamos el error si la columna ya existe (Código 42S21)
-        if ($e->getCode() == '42S21') {
+        if ($e->getCode() == '42S21') {//el error 42S21 significa que ya existe la columna
             echo "<p class='info'>ℹ️ La columna 'eliminado' ya existía.</p>";
         } else {
             echo "<p class='error'>❌ Error al alterar la tabla: " . $e->getMessage() . "</p>";
@@ -330,7 +328,7 @@
     echo "<div class='card-sub'>";
     muestraEnunciado($enunciados[6]);
 
-    //creamos un pedido
+    //crea un pedido
     $usuario_id = 1;//alberto
     $producto_id = 1;//naranjas
     $cantidad_comprada = 10; //cantidad
