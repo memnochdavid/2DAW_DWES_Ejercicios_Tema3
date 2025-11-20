@@ -6,7 +6,6 @@ body {
     max-width: 65vw;
     margin: 50px auto;
     padding: 20px;
-    /*background: black;*/
     background-image: url("../img/background.jpg")!important;
     background-attachment: fixed;
     -webkit-background-size: cover;
@@ -49,8 +48,6 @@ pre{
     padding: 20px 20px 40px 20px;
     border-radius: 5px;
     box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-    /*margin-bottom: 50px;*/
-    /*border: 3px solid rgb(192, 192, 192);*/
 }
 .card-nav {
     display: flex;
@@ -58,8 +55,6 @@ pre{
     padding: 20px 20px 40px 20px;
     border-radius: 5px;
     box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-    /*margin-bottom: 50px;*/
-    /*border: 3px solid rgb(192, 192, 192);*/
 }
 h1 {
     color: #000000;
